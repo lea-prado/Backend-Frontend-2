@@ -1,0 +1,14 @@
+<h1>Iniciar Sesión</h1>
+<form action="/api/sessions/login" method="POST">
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" placeholder="Ingresa tu email" required>
+  </div>
+  <div>
+    <label for="password">Contraseña:</label>
+    <input type="password" name="password" id="password" placeholder="Ingresa tu contraseña" required>
+  </div>
+  <button type="submit">Ingresar</button>
+</form>
+
+<p>¿No tienes cuenta? <a href="/register">Regístrate</a></p>
