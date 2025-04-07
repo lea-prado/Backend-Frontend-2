@@ -3,48 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title>{{title}}</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/home.css">
 </head>
 <body>
-  <h1>{{title}}</h1>
+  <header class="header">
+    <h1>{{title}}</h1>
 
-  {{#if user}}
-    <p>Bienvenido, {{user.first_name}} | <a href="/logout">Cerrar Sesión</a></p>
-  {{else}}
-    <p>
-      <a href="/login">Iniciar Sesión</a> | 
-      <a href="/register">Registrarse</a>
-    </p>
-  {{/if}}
+    <nav>
+      {{#if user}}
+        <span>Bienvenido, {{user.first_name}}</span>
+        <a href="/logout" class="btn">Cerrar Sesión</a>
+      {{else}}
+        <a href="/login" class="btn">Iniciar Sesión</a>
+        <a href="/register" class="btn">Registrarse</a>
+      {{/if}}
+      {{#if user}}
+        <a href="/cart" class="btn">🛒 Ver Carrito</a>
+      {{/if}}
+    </nav>
+  </header>
 
-  {{#if products.length}}
-    <ul>
+  <main class="product-list">
+    {{#if products.length}}
       {{#each products}}
-        <li>
+        <div class="product-card">
           <h3>{{this.title}}</h3>
           <p>{{this.description}}</p>
-          <p>Precio: ${{this.price}}</p>
+          <p><strong>${{this.price}}</strong></p>
           <p>Stock: {{this.stock}}</p>
-          
+
           {{#if ../user}}
             {{#if (eq ../user.role "user")}}
-              <!-- Formulario para agregar al carrito -->
-              <form action="/api/carts/{{../user.cart._id}}/add/{{this._id}}" method="POST" style="display:inline;">
-                <input type="number" name="quantity" value="1" min="1" style="width: 50px;">
+              <form action="/api/carts/{{../user.cart._id}}/add/{{this._id}}" method="POST">
+                <input type="number" name="quantity" value="1" min="1">
                 <button type="submit">Agregar al Carrito</button>
               </form>
             {{/if}}
             {{#if (eq ../user.role "admin")}}
-              <p><a href="/api/products/view">Administrar Productos</a></p>
+              <a href="/api/products/view" class="btn admin">Administrar Productos</a>
             {{/if}}
           {{/if}}
-        </li>
+        </div>
       {{/each}}
-    </ul>
-  {{else}}
-    <p>No hay productos disponibles.</p>
-  {{/if}}
-
-  <p><a href="/cart">Ver Mi Carrito</a></p>
+    {{else}}
+      <p>No hay productos disponibles.</p>
+    {{/if}}
+  </main>
 </body>
 </html>

@@ -3,33 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <title>{{title}}</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/ticket.css">
 </head>
 <body>
-  <h1>Detalle del Ticket</h1>
+  <div class="ticket-container">
+    <h1>Detalle del Ticket</h1>
 
-  {{#if ticket}}
-    <p><strong>Código:</strong> {{ticket.code}}</p>
-    <p><strong>Fecha de Compra:</strong> {{ticket.purchase_datetime}}</p>
-    <p><strong>Monto Total:</strong> ${{ticket.amount}}</p>
-    <p><strong>Comprador:</strong> {{ticket.purchaser}}</p>
-  {{else}}
-    <p>No se generó ticket.</p>
-  {{/if}}
+    {{#if ticket}}
+      <div class="ticket-info">
+        <p><strong>Código:</strong> {{ticket.code}}</p>
+        <p><strong>Fecha de Compra:</strong> {{ticket.purchase_datetime}}</p>
+        <p><strong>Monto Total:</strong> ${{ticket.amount}}</p>
+        <p><strong>Comprador:</strong> {{ticket.purchaser}}</p>
+      </div>
+    {{else}}
+      <p class="no-ticket">No se generó ticket.</p>
+    {{/if}}
 
-  {{#if notPurchased.length}}
-    <h2>Productos No Comprados</h2>
-    <ul>
-      {{#each notPurchased}}
-        <li>
-          <p><strong>Producto:</strong> {{this.title}}</p>
-          <p><strong>Cantidad:</strong> {{this.quantity}}</p>
-        </li>
-      {{/each}}
-    </ul>
-  {{/if}}
+    {{#if notPurchased.length}}
+      <h2>Productos No Comprados</h2>
+      <ul class="not-purchased-list">
+        {{#each notPurchased}}
+          <li class="not-purchased-item">
+            <p><strong>Producto:</strong> {{this.title}}</p>
+            <p><strong>Cantidad:</strong> {{this.quantity}}</p>
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
 
-  <p><a href="/">Volver a Productos</a></p>
-  <p><a href="/logout">Cerrar Sesión</a></p>
+    <div class="ticket-actions">
+      <a href="/" class="btn-return">Volver a Productos</a>
+      <a href="/logout" class="btn-logout">Cerrar Sesión</a>
+    </div>
+  </div>
 </body>
 </html>

@@ -1,29 +1,76 @@
-/* Estilos para la vista del ticket */
-h1 {
-    color: #007bff;
+* {
+    box-sizing: border-box;
   }
   
-  ul {
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9fafb;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .ticket-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1, h2 {
+    text-align: center;
+    color: #111827;
+    margin-bottom: 1rem;
+  }
+  
+  .ticket-info p,
+  .not-purchased-item p {
+    margin: 0.3rem 0;
+    color: #374151;
+  }
+  
+  .no-ticket {
+    text-align: center;
+    color: #9ca3af;
+    font-style: italic;
+  }
+  
+  .not-purchased-list {
     list-style: none;
     padding: 0;
+    margin-top: 1rem;
   }
   
-  ul li {
-    background: #fff;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 4px;
+  .not-purchased-item {
+    background-color: #f3f4f6;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid #f59e0b;
   }
   
-  .btn-primary {
-    background-color: #007bff;
-    color: #fff;
+  .ticket-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+  
+  .btn-return,
+  .btn-logout {
     text-decoration: none;
-    padding: 6px 12px;
-    border-radius: 4px;
+    padding: 0.7rem 1.2rem;
+    background-color: #3b82f6;
+    color: white;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
   }
-  .btn-primary:hover {
-    background-color: #0056b3;
+  
+  .btn-return:hover,
+  .btn-logout:hover {
+    background-color: #2563eb;
   }
   

@@ -1,41 +1,111 @@
-.cart-list {
-    list-style: none;
-    padding: 0;
+* {
+    box-sizing: border-box;
   }
   
-  .cart-item {
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .cart-container {
     background: #fff;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 10px;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  h1 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #222;
+  }
+  
+  .product-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9fafb;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid #3b82f6;
+  }
+  
+  .product-item p {
+    margin: 0.2rem 0;
   }
   
   .btn-delete {
-    background-color: #dc3545;
-    color: #fff;
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
   }
+  
   .btn-delete:hover {
-    background-color: #c82333;
+    background-color: #dc2626;
+  }
+  
+  .total {
+    font-size: 1.2rem;
+    text-align: right;
+    margin-top: 1rem;
+    font-weight: bold;
   }
   
   .btn-purchase {
-    background-color: #007bff;
-    color: #fff;
-    margin-top: 10px;
-  }
-  .btn-purchase:hover {
-    background-color: #0056b3;
+    width: 100%;
+    padding: 1rem;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 1rem;
+    font-size: 1rem;
+    cursor: pointer;
   }
   
-  .btn-secondary {
-    background-color: #6c757d;
-    color: #fff;
-    text-decoration: none;
-    padding: 6px 12px;
-    border-radius: 4px;
+  .btn-purchase:hover {
+    background-color: #059669;
   }
-  .btn-secondary:hover {
-    background-color: #5a6268;
+  
+  .cart-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+  
+  .btn-back,
+  .btn-logout {
+    text-decoration: none;
+    padding: 0.7rem 1rem;
+    background-color: #3b82f6;
+    color: white;
+    border-radius: 6px;
+  }
+  
+  .btn-back:hover,
+  .btn-logout:hover {
+    background-color: #2563eb;
+  }
+  
+  .empty {
+    text-align: center;
+    font-style: italic;
+    color: #777;
   }
   
