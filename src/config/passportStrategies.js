@@ -5,36 +5,29 @@ import User from '../models/User.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'tu_jwt_secret';
 
-// Estrategia Local para login
-passport.use('local', new LocalStrategy({
-  usernameField: 'email',
-  passwordField: 'password'
-}, async (email, password, done) => {
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return done(null, false, { message: 'Usuario no encontrado' });
+// Estrategia local para login
+passport.use('local', new LocalStrategy(
+  { usernameField: 'email', passwordField: 'password' },
+  async (email, password, done) => {
+    try {
+      const user = await User.findOne({ email });
+      if (!user || !user.comparePassword(password)) {
+        return done(null, false, { message: 'Credenciales inválidas' });
+      }
+      return done(null, user);
+    } catch (error) {
+      return done(error);
     }
-    if (!user.comparePassword(password)) {
-      return done(null, false, { message: 'Contraseña incorrecta' });
-    }
-    return done(null, user);
-  } catch (error) {
-    return done(error);
   }
-}));
+));
 
-// Cookie extractor personalizado
+// Extrae el token desde la cookie 'jwt'
 const cookieExtractor = (req) => {
-  if (req && req.headers && req.headers.cookie) {
-    // 'req.headers.cookie' es un string tipo: "jwt=token; otraCookie=valor;..."
-    const cookies = req.headers.cookie.split(';');
-    for (const c of cookies) {
-      const [name, value] = c.trim().split('=');
-      if (name === 'jwt') return value;
-    }
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies.jwt;
   }
-  return null;
+  return token;
 };
 
 const jwtOptions = {
@@ -42,18 +35,14 @@ const jwtOptions = {
   secretOrKey: JWT_SECRET
 };
 
-passport.use('jwt', new JwtStrategy({
-  jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-  secretOrKey: JWT_SECRET
-}, async (payload, done) => {
+passport.use('jwt', new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
     const user = await User.findById(payload.id);
-    if (!user) return done(null, false);
-    return done(null, user);
+    if (user) return done(null, user);
+    return done(null, false);
   } catch (error) {
     return done(error, false);
   }
 }));
-
 
 export default passport;

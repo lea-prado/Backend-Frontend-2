@@ -1,0 +1,49 @@
+<h1>Lista de Productos</h1>
+
+{{#if products.length}}
+  <ul>
+    {{#each products}}
+      <li>
+        <strong>{{this.title}}</strong> - {{this.description}} - ${{this.price}} - Stock: {{this.stock}}
+        {{#if ../user}}
+          {{#if (eq ../user.role "user")}}
+            <!-- Se asume que el usuario tiene asignado su carrito en user.cart -->
+            <form action="/api/carts/{{../user.cart}}/add/{{this._id}}" method="POST" style="display:inline;">
+              <input type="number" name="quantity" value="1" min="1" style="width:50px;">
+              <button type="submit">Agregar al Carrito</button>
+            </form>
+          {{/if}}
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>No hay productos disponibles.</p>
+{{/if}}
+
+{{#if user}}
+  {{#if (eq user.role "admin")}}
+    <h2>Crear Nuevo Producto</h2>
+    <form action="/api/products" method="POST">
+      <div>
+        <label for="title">Título:</label>
+        <input type="text" name="title" id="title" required>
+      </div>
+      <div>
+        <label for="description">Descripción:</label>
+        <input type="text" name="description" id="description" required>
+      </div>
+      <div>
+        <label for="price">Precio:</label>
+        <input type="number" name="price" id="price" required>
+      </div>
+      <div>
+        <label for="stock">Stock:</label>
+        <input type="number" name="stock" id="stock" required>
+      </div>
+      <button type="submit">Crear Producto</button>
+    </form>
+  {{/if}}
+{{/if}}
+
+<p><a href="/cart">Ver Mi Carrito</a></p>
