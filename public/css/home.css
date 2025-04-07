@@ -1,0 +1,28 @@
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .product-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    width: 220px;
+  }
+  
+  .add-cart-form {
+    margin-top: 10px;
+  }
+  
+  .btn-add {
+    background-color: #28a745;
+    color: #fff;
+  }
+  .btn-add:hover {
+    background-color: #218838;
+  }
+  

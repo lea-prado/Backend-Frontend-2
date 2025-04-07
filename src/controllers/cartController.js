@@ -3,7 +3,6 @@ import Product from '../models/Product.js';
 import Ticket from '../models/Ticket.js';
 import { v4 as uuidv4 } from 'uuid';
 
-// Agrega producto al carrito
 export const addProductToCart = async (req, res) => {
   try {
     const { cid, pid } = req.params;
@@ -19,15 +18,15 @@ export const addProductToCart = async (req, res) => {
     } else {
       cart.products.push({ product: pid, quantity });
     }
-
     await cart.save();
-    return res.redirect('/'); // Redirige a la página de productos
+    // Redirige a la página de donde vino la petición o a la raíz
+    return res.redirect(req.get("Referrer") || "/");
   } catch (error) {
     return res.status(500).json({ message: 'Error al agregar producto al carrito', error });
   }
 };
 
-// Muestra el contenido del carrito
+
 export const viewCart = async (req, res) => {
   try {
     const { cid } = req.params;
@@ -41,8 +40,7 @@ export const viewCart = async (req, res) => {
 
     return res.render('cart', {
       title: 'Mi Carrito',
-      cart,
-      total,
+      cart: { ...cart.toObject(), total },
       user: req.user
     });
   } catch (error) {
@@ -50,7 +48,6 @@ export const viewCart = async (req, res) => {
   }
 };
 
-// Elimina un producto del carrito
 export const deleteProductFromCart = async (req, res) => {
   try {
     const { cid, pid } = req.params;
@@ -60,13 +57,12 @@ export const deleteProductFromCart = async (req, res) => {
     cart.products = cart.products.filter(item => item.product.toString() !== pid);
     await cart.save();
 
-    return res.redirect(`/api/carts/${cid}`); // Redirige a la vista actualizada del carrito
+    return res.redirect(req.get("Referrer") || "/");
   } catch (error) {
     return res.status(500).send('Error al eliminar producto del carrito');
   }
 };
 
-// Finaliza la compra y genera un ticket
 export const purchaseCart = async (req, res) => {
   try {
     const { cid } = req.params;
@@ -97,7 +93,6 @@ export const purchaseCart = async (req, res) => {
       await ticket.save();
     }
 
-    // Elimina del carrito los productos que sí se compraron
     cart.products = cart.products.filter(item =>
       notPurchased.find(np => np.product._id.toString() === item.product._id.toString())
     );
@@ -116,3 +111,5 @@ export const purchaseCart = async (req, res) => {
     return res.status(500).send('Error al procesar la compra');
   }
 };
+
+export default {}; // Exportación vacía para evitar conflictos con exportaciones nombradas.

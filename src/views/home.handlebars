@@ -11,7 +11,10 @@
   {{#if user}}
     <p>Bienvenido, {{user.first_name}} | <a href="/logout">Cerrar Sesión</a></p>
   {{else}}
-    <p><a href="/login">Iniciar Sesión</a> | <a href="/register">Registrarse</a></p>
+    <p>
+      <a href="/login">Iniciar Sesión</a> | 
+      <a href="/register">Registrarse</a>
+    </p>
   {{/if}}
 
   {{#if products.length}}
@@ -22,15 +25,15 @@
           <p>{{this.description}}</p>
           <p>Precio: ${{this.price}}</p>
           <p>Stock: {{this.stock}}</p>
-
+          
           {{#if ../user}}
             {{#if (eq ../user.role "user")}}
-              <form action="/api/carts/{{../user.cart._id}}/add/{{this._id}}" method="POST">
+              <!-- Formulario para agregar al carrito -->
+              <form action="/api/carts/{{../user.cart._id}}/add/{{this._id}}" method="POST" style="display:inline;">
                 <input type="number" name="quantity" value="1" min="1" style="width: 50px;">
                 <button type="submit">Agregar al Carrito</button>
               </form>
             {{/if}}
-
             {{#if (eq ../user.role "admin")}}
               <p><a href="/api/products/view">Administrar Productos</a></p>
             {{/if}}
@@ -41,5 +44,7 @@
   {{else}}
     <p>No hay productos disponibles.</p>
   {{/if}}
+
+  <p><a href="/cart">Ver Mi Carrito</a></p>
 </body>
 </html>

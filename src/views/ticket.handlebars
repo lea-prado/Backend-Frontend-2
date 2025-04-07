@@ -1,21 +1,35 @@
-<h1>Detalle del Ticket</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <h1>Detalle del Ticket</h1>
 
-<p><strong>Código:</strong> {{ticket.code}}</p>
-<p><strong>Fecha de Compra:</strong> {{ticket.purchase_datetime}}</p>
-<p><strong>Monto Total:</strong> ${{ticket.amount}}</p>
-<p><strong>Comprador:</strong> {{ticket.purchaser}}</p>
+  {{#if ticket}}
+    <p><strong>Código:</strong> {{ticket.code}}</p>
+    <p><strong>Fecha de Compra:</strong> {{ticket.purchase_datetime}}</p>
+    <p><strong>Monto Total:</strong> ${{ticket.amount}}</p>
+    <p><strong>Comprador:</strong> {{ticket.purchaser}}</p>
+  {{else}}
+    <p>No se generó ticket.</p>
+  {{/if}}
 
-{{#if ticket.productsNotPurchased}}
-  {{#if ticket.productsNotPurchased.length}}
+  {{#if notPurchased.length}}
     <h2>Productos No Comprados</h2>
     <ul>
-      {{#each ticket.productsNotPurchased}}
+      {{#each notPurchased}}
         <li>
           <p><strong>Producto:</strong> {{this.title}}</p>
+          <p><strong>Cantidad:</strong> {{this.quantity}}</p>
         </li>
       {{/each}}
     </ul>
   {{/if}}
-{{/if}}
 
-<p><a href="/api/products/view">Volver a Productos</a></p>
+  <p><a href="/">Volver a Productos</a></p>
+  <p><a href="/logout">Cerrar Sesión</a></p>
+</body>
+</html>
